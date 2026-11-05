@@ -20,6 +20,14 @@ Full policy: [PRIVACY.md](PRIVACY.md).
 - It never sees or stores your KPN password or SMS codes.
 - It stores only invoice keys (date + amount) and file names in `chrome.storage.local`, to avoid duplicates.
 
+## Install from a release
+
+1. Download `kpn-factuur-grabber-vX.Y.Z.zip` from https://github.com/ldanicel/kpn-factuur-grabber/releases/latest
+2. Unzip it to a folder you keep.
+3. Open `chrome://extensions`, turn on Developer mode, click **Load unpacked** and pick the folder.
+
+To update: unzip the new version over the same folder, then click ↻ on the extension card.
+
 ## Install (dev)
 1. `chrome://extensions` → enable Developer mode → **Load unpacked** → pick this folder.
 2. Log in to MijnKPN in the same browser, open the extension, click **Get last month's invoices**.
@@ -31,6 +39,10 @@ NODE_PATH=$(npm root -g) node test/e2e-smoke.js   # full flow against a fake Mij
 npm run zip                                    # build factuur-grabber.zip for the store
 ```
 CI (`.github/workflows/test.yml`) runs the unit tests, the E2E smoke test and a manifest/package version check on every push and PR.
+
+## Releasing
+
+Bump `version` in `manifest.json` and `package.json`, commit, then `git tag vX.Y.Z && git push --tags`. CI builds the zip and attaches it to a GitHub Release.
 
 ## Layout
 - `lib/core.js`: pure helpers (Dutch dates, amounts, ranking, file names, scheduling)
