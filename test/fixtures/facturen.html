@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"></head><body>
+<header><button>Welkom A Test , ga naar mijn Producten</button></header>
+<main id="app">Laden…</main>
+<script>
+// Mirrors the real MijnKPN invoices page (outline from 2026-10-20): "Alle facturen" shows only recent
+// invoices for all products; choosing one product in the <select> shows its longer history, with a
+// custom <kpn-button> "Toon meer facturen". Controls are <kpn-icon role="button"> with aria-labels, and
+// the PDF is prepared server side, so the download only starts seconds after the click.
+customElements.define('kpn-icon', class extends HTMLElement {});
+customElements.define('kpn-button', class extends HTMLElement {});
+const ALL = [
+  ['06-12 34 56 78', '15 oktober 2026', 'KPN_2026_oktober_06-12345678', 2500],
+  ['Teststraat 1', '04 oktober 2026', 'KPN_2026_oktober_Teststraat1', 3000],
+  ['06-98 76 54 32', '25 september 2026', 'KPN_2026_september_06-98765432', 1500],
+  ['06-12 34 56 78', '15 september 2026', 'KPN_2026_september_06-12345678', 2000],
+];
+const PRODUCTS = {
+  '06-12 34 56 78': [ALL[0], ALL[3], ['06-12 34 56 78', '15 augustus 2026', 'KPN_2026_augustus_06-12345678', 1500]],
+  'Teststraat 1': [ALL[1]],
+  '06-98 76 54 32': [ALL[2]],
+};
+const OLDER = { '06-12 34 56 78': [['06-12 34 56 78', '15 juli 2026', 'KPN_2026_juli_06-12345678', 1500]] };
+
+function blobDownload(name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['%PDF-1.4 ' + name], { type: 'application/pdf' }));
+  a.download = name + '.pdf'; a.click(); URL.revokeObjectURL(a.href);
+}
+function rows(list, into) {
+  for (const [product, date, file, delay] of list) {
+    const row = document.createElement('div');
+    row.innerHTML = `<kpn-icon role="button" aria-label="Factuur bekijken ${product} - ${date} - opent in nieuw venster"></kpn-icon>
+      <kpn-icon role="button" aria-label="Factuur downloaden ${product} - ${date}"></kpn-icon>`;
+    row.children[0].onclick = () => { window.__opened = (window.__opened || 0) + 1; };
+    let busy = false;
+    row.children[1].onclick = () => { if (busy) return; busy = true; setTimeout(() => { blobDownload(file); busy = false; }, delay); };
+    into.appendChild(row);
+  }
+}
+function render(product) {
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+  rows(product ? PRODUCTS[product] : ALL, list);
+  if (product && OLDER[product]) {
+    const more = document.createElement('kpn-button');
+    more.textContent = 'Toon meer facturen';
+    more.onclick = () => { more.remove(); rows(OLDER[product], list); };
+    list.appendChild(more);
+  }
+}
+setTimeout(() => {
+  document.getElementById('app').innerHTML = `<select id="product"><option value="">Alle facturen</option>
+      <option>06-12 34 56 78, +1</option><option>Teststraat 1</option><option>06-98 76 54 32</option></select>
+    <a href="https://www.kpn.com/mijn/producten/internet/facturen">Bekijk alle facturen</a><div id="list"></div>`;
+  const sel = document.getElementById('product');
+  sel.onchange = () => { document.getElementById('list').innerHTML = 'Laden…'; setTimeout(() => render(sel.value ? sel.value.replace(/, \+\d+$/, '') : null), 800); };
+  render(null);
+}, 1500);
+</script>
+</body></html>

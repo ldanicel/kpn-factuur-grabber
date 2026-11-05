@@ -1,0 +1,24 @@
+name: test
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Unit tests
+        run: npm test
+      - name: Manifest and package versions match
+        run: node -e "const m=require('./manifest.json'),p=require('./package.json');if(m.version!==p.version){console.error('manifest '+m.version+' != package '+p.version);process.exit(1)}"
+      - name: E2E smoke test (fake MijnKPN)
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node test/e2e-smoke.js

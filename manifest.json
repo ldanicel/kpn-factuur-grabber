@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Factuur Grabber",
+  "version": "0.3.0",
+  "description": "Saves your KPN invoices automatically, from your own logged-in browser. No passwords, no servers.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "alarms",
+    "downloads",
+    "storage",
+    "notifications",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.kpn.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.kpn.com/*"
+      ],
+      "js": [
+        "lib/core.js",
+        "content/kpn.js",
+        "content/passive.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

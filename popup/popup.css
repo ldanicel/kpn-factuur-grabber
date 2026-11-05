@@ -1,0 +1,21 @@
+:root { --bg: #fff; --fg: #1a1a1a; --muted: #666; --accent: #0a7c3e; --border: #ddd; }
+@media (prefers-color-scheme: dark) { :root { --bg: #1e1e1e; --fg: #eee; --muted: #aaa; --accent: #3fbf74; --border: #444; } }
+body { width: 300px; margin: 0; padding: 14px; font: 13px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--fg); }
+h1 { font-size: 15px; margin: 0 0 8px; }
+.status { margin: 0 0 12px; color: var(--muted); }
+button { display: block; width: 100%; margin: 0 0 8px; padding: 8px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; }
+button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--border); }
+button:disabled { opacity: .6; cursor: default; }
+.row { display: flex; gap: 6px; align-items: center; margin: 8px 0; }
+.row.col { flex-direction: column; align-items: stretch; }
+input[type=text] { padding: 5px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); color: var(--fg); }
+.fine { font-size: 11px; color: var(--muted); margin: 10px 0 0; }
+.account { margin: 0 0 4px; font-weight: 600; }
+.account.out { color: #c0392b; }
+.account .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--accent); }
+.account.out .dot { background: #c0392b; }
+.fine a { color: var(--accent); }
+[hidden] { display: none !important; }
+.progress { margin: 0 0 10px; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; }
+.progress ul { margin: 6px 0 0; padding-left: 16px; max-height: 120px; overflow: auto; color: var(--muted); }
+.progress .fail { color: #c0392b; }

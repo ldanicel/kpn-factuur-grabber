@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h1>Factuur Grabber</h1>
+  <p id="account" class="account">Checking KPN login…</p>
+  <p id="status" class="status"></p>
+  <div id="progress" class="progress" hidden><div id="progress-text"></div><ul id="progress-list"></ul></div>
+  <button id="run">Get last month's invoices</button>
+  <button id="all" class="secondary">Download all available invoices</button>
+  <button id="login" class="secondary" hidden>Log in to MijnKPN</button>
+  <label class="row"><input type="checkbox" id="auto"> Fetch new invoices automatically</label>
+  <p class="fine">KPN logs you out after about an hour. When a new invoice is due you get a reminder; log in and it downloads right away.</p>
+  <label class="row col">Save into Downloads/<input type="text" id="folder"></label>
+  <p class="fine">Tip: tick "Onthoud dit apparaat" when you log in, so KPN skips the SMS code for 6 months.</p>
+  <p class="fine"><a href="#" id="outline">Save page outline for support</a> (e-mails, amounts and long numbers masked).</p>
+  <p class="fine">Runs only in this browser. Your KPN login and invoices never reach us.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

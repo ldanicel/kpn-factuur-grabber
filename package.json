@@ -1,0 +1,10 @@
+{
+  "name": "kpn-factuur-grabber",
+  "version": "0.3.0",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "zip": "rm -f factuur-grabber.zip && zip -r factuur-grabber.zip manifest.json background.js lib content popup icons"
+  },
+  "license": "MIT",
+  "description": "Browser extension that saves your KPN invoices from your own logged-in MijnKPN session"
+}

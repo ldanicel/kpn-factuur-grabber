@@ -1,0 +1,15 @@
+<!doctype html>
+<html><head><meta charset="utf-8"></head><body>
+<main id="app">Laden…</main>
+<script>
+setTimeout(() => {
+  document.getElementById('app').innerHTML = `
+    <div class="row"><span>Factuur 4 augustus 2026</span> <span>€ 59,99</span> <a href="https://www.kpn.com/mijn/api/invoice/KPN_2026_augustus_Teststraat1.pdf">Download</a></div>
+    <div id="older"></div><button id="more">Toon meer</button>`;
+  document.getElementById('more').onclick = () => {
+    document.getElementById('older').innerHTML = `<div class="row"><span>Factuur 4 juli 2026</span> <span>€ 59,99</span> <a href="https://www.kpn.com/mijn/api/invoice/KPN_2026_juli_Teststraat1.pdf">Download</a></div>`;
+    document.getElementById('more').remove();
+  };
+}, 1000);
+</script>
+</body></html>
