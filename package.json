@@ -1,6 +1,6 @@
 {
   "name": "kpn-factuur-grabber",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "scripts": {
     "test": "node --test test/*.test.js",
     "zip": "rm -f factuur-grabber.zip && zip -r factuur-grabber.zip manifest.json background.js lib content popup icons"
